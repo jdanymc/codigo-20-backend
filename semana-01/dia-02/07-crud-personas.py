@@ -2,6 +2,7 @@
     
 import os
 import time
+from pathlib import Path
 
 """
 CRUD
@@ -56,9 +57,9 @@ def cargar_datos(str_datos):
 
 #############################################
 
-#arch = Path('personas.csv')
-#arch.touch(exist_ok=True)
-f = open('personas.csv','a+')
+arch = Path('personas.csv')
+arch.touch(exist_ok=True)
+f = open(arch,'r')
 str_datos = f.read()
 f.close()
 
