@@ -1,0 +1,5 @@
+flask
+firebase_admin
+python-dotenv
+pyrebase4
+requests-toolbelt==0.10.1
