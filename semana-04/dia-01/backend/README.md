@@ -1,0 +1,11 @@
+## No olvidar las variables de entorno
+```
+FLASK_APP = run.py
+FLASK_DEBUG = True
+```
+
+## Crear la base de datos
+```
+flask db migrate -m "Initial migration."
+flask db upgrade
+```
