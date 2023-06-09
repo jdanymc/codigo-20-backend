@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { AdminContext } from "../../../contexts/AdminContext";
 import { signUp } from "../../../services/authServices";
+import { useNavigate } from "react-router-dom";
 
 export const PublicRegister = ({
   showRegister,
@@ -15,9 +16,9 @@ export const PublicRegister = ({
     successMessage: "",
   });
   const [newUser, setNewUSer] = useState({
-    userEmail: "",
-    userPassword: "",
-    userPassword2: "",
+    name: "",
+    email: "",
+    password: "",
   });
 
   const handleInputChange = (e) => {
@@ -37,11 +38,20 @@ export const PublicRegister = ({
     try {
       const response = await signUp(newUser);
       if (response.success) {
-        return setRegisterState({
+        
+        localStorage.setItem("token", response.data.access_token);
+        setRegisterState({
           ...registerState,
           isAuthenticated: true,
           isLoading: false,
         });
+        
+      setAuthentication({
+        ...authentication,
+        isAuthenticated: true,
+        successMessage: "Usuario logeado exitosamente",
+      });
+      navigate("/admin-panel");
       }
       return setRegisterState({
         ...registerState,
@@ -50,7 +60,7 @@ export const PublicRegister = ({
         isLoading: false,
       });
     } catch (error) {
-      console.log(error);
+      
       return setRegisterState({
         ...registerState,
         isError: true,
@@ -82,44 +92,45 @@ export const PublicRegister = ({
             {registerState.errorMessage}
           </div>
           <div className="Auth-modal-form-group">
-            <label htmlFor="userEmail" className="Auth-modal-label">
+            <label htmlFor="name" className="Auth-modal-label">
+              Nombre
+            </label>
+            <input
+              type="text"
+              className="Auth-modal-input"
+              id="name"
+              name="name"
+              value={newUser.name}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="Auth-modal-form-group">
+            <label htmlFor="email" className="Auth-modal-label">
               Correo
             </label>
             <input
               type="text"
               className="Auth-modal-input"
-              id="userEmail"
-              name="userEmail"
-              value={newUser.userEmail}
+              id="email"
+              name="email"
+              value={newUser.email}
               onChange={handleInputChange}
             />
           </div>
           <div className="Auth-modal-form-group">
-            <label htmlFor="userPassword" className="Auth-modal-label">
+            <label htmlFor="password" className="Auth-modal-label">
               Contraseña
             </label>
             <input
               type="password"
               className="Auth-modal-input"
-              id="userPassword"
-              name="userPassword"
-              value={newUser.userPassword}
+              id="password"
+              name="password"
+              value={newUser.password}
               onChange={handleInputChange}
             />
           </div>
-          <div className="Auth-modal-form-group">
-            <label htmlFor="userPassword2" className="Auth-modal-label">
-              Repetir contraseña
-            </label>
-            <input
-              type="password"
-              className="Auth-modal-input"
-              id="userPassword2"
-              name="userPassword2"
-              value={newUser.userPassword2}
-              onChange={handleInputChange}
-            />
-          </div>
+        
           <button className="Auth-modal-button" type="submit">
             Crear cuenta
           </button>

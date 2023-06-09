@@ -8,16 +8,12 @@ export const Home = () => {
   const [listOfProducts, setListOfProducts] = useState([]);
 
   useEffect(() => {
-    // fetch('http://127.0.0.1:5000/productos/lista')
-    //   .then(response => response.json())
-    //   .then(json => setListOfProducts(json.data))
-
     const getData = async () => {
       const response = await fetch("http://127.0.0.1:5000/product");
       const json = await response.json();
       if (json.status === true) {
         setListOfProducts(json.content);
-      }else{
+      } else {
         console.log("error");
       }
     };

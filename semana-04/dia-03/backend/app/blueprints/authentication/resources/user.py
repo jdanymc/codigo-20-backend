@@ -2,15 +2,23 @@ from flask import request
 from flask_restful import Resource, Api
 from ..models import User
 from utils.db import db
+from ..schemas import UserSchema
 
 from .. import authentication
-from flask_jwt_extended import create_access_token, create_refresh_token
+from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required
 from werkzeug.security import generate_password_hash, check_password_hash
 
 api = Api(authentication)
 class UserResource(Resource):
+    @jwt_required()
     def get(self):
-        pass
+        data = User.get_all()
+        data_schema = UserSchema(many=True)
+        context = {
+            'status': True,
+            'content': data_schema.dump(data)
+        }
+        return context
     def post(self):
         try:
             json = request.get_json()
