@@ -21,6 +21,8 @@ export const PublicRegister = ({
     password: "",
   });
 
+  const navigate = useNavigate();
+
   const handleInputChange = (e) => {
     const { name, value } = e.currentTarget;
     setNewUSer({
@@ -31,36 +33,29 @@ export const PublicRegister = ({
 
   const createUser = async (e) => {
     e.preventDefault();
-    setRegisterState({
-      ...registerState,
-      isLoading: true,
-    });
+    console.log("iniciando registro...")
     try {
       const response = await signUp(newUser);
-      if (response.success) {
-        
+      console.log(response.data)
+      if (response.status === 201) {
+        console.log(response.data)
         localStorage.setItem("token", response.data.access_token);
         setRegisterState({
           ...registerState,
           isAuthenticated: true,
           isLoading: false,
         });
-        
-      setAuthentication({
-        ...authentication,
-        isAuthenticated: true,
-        successMessage: "Usuario logeado exitosamente",
-      });
-      navigate("/admin-panel");
+        navigate("/admin-panel");
       }
-      return setRegisterState({
+      /*return setRegisterState({
         ...registerState,
         isError: true,
         errorMessage: response.message,
         isLoading: false,
       });
+      */
     } catch (error) {
-      
+      console.log(error);
       return setRegisterState({
         ...registerState,
         isError: true,
@@ -130,7 +125,6 @@ export const PublicRegister = ({
               onChange={handleInputChange}
             />
           </div>
-        
           <button className="Auth-modal-button" type="submit">
             Crear cuenta
           </button>

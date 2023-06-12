@@ -14,7 +14,6 @@ export const signIn = async (user) => {
 };
 
 export const signUp = async (user) => {
-  console.log(user);
   const response = await fetch(`${API_URL}/user`, {
     method: "POST",
     headers: {
@@ -24,7 +23,7 @@ export const signUp = async (user) => {
   });
   const data = await response.json();
   const status = response.status;
-  return {data,status};
+  return { data, status };
 };
 
 export const isAuth = () => {

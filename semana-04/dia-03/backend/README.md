@@ -9,3 +9,11 @@ FLASK_DEBUG = True
 flask db migrate -m "Initial migration."
 flask db upgrade
 ```
+
+## Archivo yaml para swagger
+
+Este archivo solo nos sirve para hacer la conversion a json, luego de haber usado el editor de swagger
+
+## Renderizar la ruta swagger
+
+Para renderizar el swagger primero tenemos que crear una ruta `/swagger.json` que será consumido por el html `/templates/swagger.html`
