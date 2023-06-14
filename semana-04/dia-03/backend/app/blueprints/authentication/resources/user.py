@@ -13,13 +13,19 @@ class UserResource(Resource):
 
     @jwt_required()
     def get(self):
-        data = User.get_all()
-        data_schema = UserSchema(many=True)
-        context = {
-            'status': True,
-            'content': data_schema.dump(data)
-        }
-        return context
+        try:
+            data = User.get_all()
+            data_schema = UserSchema(many=True)
+            context = {
+                'status': True,
+                'content': data_schema.dump(data)
+            }
+            return context
+        except Exception as e:
+            return {
+                'status': False,
+                'message': str(e)
+            },500
     
     def post(self):
         try:
@@ -61,7 +67,7 @@ class SignInResource(Resource):
                 return {
                     'status': False,
                     'message': 'Usuario o contraseña incorrectos'
-                },404
+                },400
             is_pwd_secure = check_password_hash(record.password,json['password'])
             if is_pwd_secure:
                 access_token = create_access_token(identity=record.id)
