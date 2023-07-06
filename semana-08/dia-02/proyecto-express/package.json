@@ -1,0 +1,24 @@
+{
+  "name": "proyecto-express",
+  "version": "1.0.0",
+  "description": "mi primer proyecto con node",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [
+    "express",
+    "proyecto"
+  ],
+  "author": "Jhon Mamani",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
